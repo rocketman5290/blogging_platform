@@ -1,5 +1,5 @@
 import { auth, googleAuthProvider } from '../lib/firebase';
-import { signInWithPopup } from 'firebase/auth'
+import { signInWithPopup, signInAnonymously, signOut } from 'firebase/auth'
 import Image from 'next/image'
 
 // 1. user signed out <SignInButton />
@@ -12,8 +12,8 @@ export default function Enter(props) {
 
     return (
         <main>
-            { user ? !username ? <UsernameForm /> : <SignOutButton /> : <SignInButton /> }
             <h1>Sign up</h1>
+            { user ? !username ? <UsernameForm /> : <SignOutButton /> : <SignInButton /> }
        </main>
     )
 }
@@ -26,7 +26,7 @@ function SignInButton() {
     return (
       <>
         <button className="btn-google" onClick={signInWithGoogle}>
-          <img src={'/google.png'} />Sign in with Google
+          <img src={'/google.png'} /> Sign in with Google
         </button>
         <button onClick={() => signInAnonymously(auth)}>
           Sign in Anonymously
@@ -36,13 +36,10 @@ function SignInButton() {
   }
 
 function SignOutButton() {
-    <button>SignOut Button</button>
+    return <button onClick={() => auth.signOut()}>Sign Out</button>
 }
 
 
 function UsernameForm() {
-    <form>
-        <label>username:</label>
-        <input type="" value=""></input>
-    </form>
+    return null;
 }
